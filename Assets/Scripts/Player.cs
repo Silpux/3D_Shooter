@@ -11,8 +11,14 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private Camera mainCamera;
 
-    [SerializeField] private float lookSpeedX;
-    [SerializeField] private float lookSpeedY;
+    private float lookSpeedX;
+    private float lookSpeedY;
+
+    [SerializeField] private float lookSpeedXNormal = 1f;
+    [SerializeField] private float lookSpeedYNormal = 0.5f;
+
+    [SerializeField] private float lookSpeedXScoping = 0.5f;
+    [SerializeField] private float lookSpeedYScoping = 0.25f;
 
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -31,6 +37,9 @@ public class Player : MonoBehaviour{
     public event Action OnWalk;
     public event Action OnSprint;
 
+    public event Action OnShoot;
+    public event Action OnScope;
+
 
     private void Awake(){
 
@@ -39,6 +48,9 @@ public class Player : MonoBehaviour{
         inputActions.Player.Enable();
 
         characterController = GetComponent<CharacterController>();
+
+        lookSpeedX = lookSpeedXNormal;
+        lookSpeedY = lookSpeedYNormal;
 
     }
 
@@ -51,6 +63,9 @@ public class Player : MonoBehaviour{
         inputActions.Player.Jump.started += JumpStart;
         inputActions.Player.Jump.canceled += JumpCancel;
 
+        inputActions.Player.Shoot.performed += Shoot;
+
+        inputActions.Player.Scope.performed += Scope;
     }
 
     private void OnDisable(){
@@ -61,6 +76,9 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Jump.started -= JumpStart;
         inputActions.Player.Jump.canceled -= JumpCancel;
+
+        inputActions.Player.Shoot.performed -= Shoot;
+        inputActions.Player.Scope.performed -= Scope;
     }
 
     private void JumpStart(InputAction.CallbackContext ctx){
@@ -75,6 +93,14 @@ public class Player : MonoBehaviour{
     }
     private void SprintDisable(InputAction.CallbackContext ctx){
         sprint = false;
+    }
+
+    private void Shoot(InputAction.CallbackContext ctx){
+        OnShoot?.Invoke();
+    }
+
+    private void Scope(InputAction.CallbackContext ctx){
+        OnScope?.Invoke();
     }
 
     private void Look(InputAction.CallbackContext ctx){
@@ -122,6 +148,17 @@ public class Player : MonoBehaviour{
 
         characterController.Move(moveDirection * Time.deltaTime);
 
+    }
+
+    public void ChangeLookSpeed(bool isScoping){
+        if(isScoping){
+            lookSpeedX = lookSpeedXScoping;
+            lookSpeedY = lookSpeedYScoping;
+        }
+        else{
+            lookSpeedX = lookSpeedXNormal;
+            lookSpeedY = lookSpeedYNormal;
+        }
     }
 
 

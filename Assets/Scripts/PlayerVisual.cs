@@ -6,7 +6,7 @@ public class PlayerVisual : MonoBehaviour{
 
     private Animator animator;
 
-    private const string STATE_STRING = "State";
+    private const string STATE_ANIMATION_NAME = "State";
 
 
     private void Awake(){
@@ -26,15 +26,15 @@ public class PlayerVisual : MonoBehaviour{
     }
 
     private void Idle(){
-        animator.SetInteger(STATE_STRING, 0);
+        animator.SetInteger(STATE_ANIMATION_NAME, 0);
     }
 
     private void Walk(){
-        animator.SetInteger(STATE_STRING, 1);
+        animator.SetInteger(STATE_ANIMATION_NAME, 1);
     }
 
     private void Sprint(){
-        animator.SetInteger(STATE_STRING, 2);
+        animator.SetInteger(STATE_ANIMATION_NAME, 2);
     }
 
     private void Update(){
