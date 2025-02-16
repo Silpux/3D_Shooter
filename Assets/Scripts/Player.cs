@@ -13,9 +13,15 @@ public class Player : MonoBehaviour{
     [SerializeField] private float lookSpeedX;
     [SerializeField] private float lookSpeedY;
 
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float runSpeed;
+
     [SerializeField] private float lookLimitY = 90;
 
     private float cameraRotation;
+    private bool sprint;
+    private Vector2 moveDirection = Vector2.zero;
+
 
     private void Awake(){
 
@@ -29,11 +35,24 @@ public class Player : MonoBehaviour{
 
     private void OnEnable(){
         inputActions.Player.Look.performed += Look;
+
+        inputActions.Player.Sprint.started += SprintEnable;
+        inputActions.Player.Sprint.canceled += SprintDisable;
+
     }
 
     private void OnDisable(){
         inputActions.Player.Look.performed -= Look;
 
+        inputActions.Player.Sprint.started -= SprintEnable;
+        inputActions.Player.Sprint.canceled -= SprintDisable;
+    }
+
+    private void SprintEnable(InputAction.CallbackContext ctx){
+        sprint = true;
+    }
+    private void SprintDisable(InputAction.CallbackContext ctx){
+        sprint = false;
     }
 
     private void Look(InputAction.CallbackContext ctx){
@@ -42,8 +61,6 @@ public class Player : MonoBehaviour{
 
         cameraRotation += value.y * lookSpeedY;
         cameraRotation = Mathf.Clamp(cameraRotation, -lookLimitY, lookLimitY);
-        
-        Debug.Log(cameraRotation);
 
         mainCamera.transform.localRotation = Quaternion.Euler(-cameraRotation,0,0);
 
@@ -51,8 +68,26 @@ public class Player : MonoBehaviour{
 
     }
 
+    private void Move(Vector2 direction){
+
+        if(direction == Vector2.zero){
+            return;
+        }
+
+        Vector3 vectorForward = direction.y * transform.TransformDirection(Vector3.forward);
+        Vector3 vectorRigth = direction.x * transform.TransformDirection(Vector3.right);
+
+        Vector3 moveDirection = (vectorForward + vectorRigth) * (sprint ? runSpeed : walkSpeed);
+
+        characterController.Move(moveDirection * Time.deltaTime);
+
+
+    }
+
 
     private void Update(){
+
+        Move(inputActions.Player.Move.ReadValue<Vector2>());
 
     }
 
