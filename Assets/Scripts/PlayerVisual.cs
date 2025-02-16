@@ -14,11 +14,15 @@ public class PlayerVisual : MonoBehaviour{
     }
 
     private void OnEnable(){
-
         player.OnIdle += Idle;
         player.OnWalk += Walk;
         player.OnSprint += Sprint;
+    }
 
+    private void OnDisable(){
+        player.OnIdle -= Idle;
+        player.OnWalk -= Walk;
+        player.OnSprint -= Sprint;
     }
 
     private void Idle(){
