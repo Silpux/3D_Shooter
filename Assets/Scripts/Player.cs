@@ -15,12 +15,16 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
 
     [SerializeField] private float lookLimitY = 90;
 
     private float cameraRotation;
     private bool sprint;
-    private Vector2 moveDirection = Vector2.zero;
+    private Vector3 moveDirection = Vector3.zero;
+
+    private bool jumping = false;
 
 
     private void Awake(){
@@ -39,6 +43,9 @@ public class Player : MonoBehaviour{
         inputActions.Player.Sprint.started += SprintEnable;
         inputActions.Player.Sprint.canceled += SprintDisable;
 
+        inputActions.Player.Jump.started += JumpStart;
+        inputActions.Player.Jump.canceled += JumpCancel;
+
     }
 
     private void OnDisable(){
@@ -46,6 +53,17 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Sprint.started -= SprintEnable;
         inputActions.Player.Sprint.canceled -= SprintDisable;
+
+        inputActions.Player.Jump.started -= JumpStart;
+        inputActions.Player.Jump.canceled -= JumpCancel;
+    }
+
+    private void JumpStart(InputAction.CallbackContext ctx){
+        jumping = true;
+    }
+
+    private void JumpCancel(InputAction.CallbackContext ctx){
+        jumping = false;
     }
 
     private void SprintEnable(InputAction.CallbackContext ctx){
@@ -70,17 +88,25 @@ public class Player : MonoBehaviour{
 
     private void Move(Vector2 direction){
 
-        if(direction == Vector2.zero){
-            return;
-        }
-
         Vector3 vectorForward = direction.y * transform.TransformDirection(Vector3.forward);
         Vector3 vectorRigth = direction.x * transform.TransformDirection(Vector3.right);
 
-        Vector3 moveDirection = (vectorForward + vectorRigth) * (sprint ? runSpeed : walkSpeed);
+        float verticalVelocity = moveDirection.y;
+
+        moveDirection = (vectorForward + vectorRigth) * (sprint ? runSpeed : walkSpeed);
+
+        if(jumping && characterController.isGrounded){
+            moveDirection.y = jumpForce;
+        }
+        else{
+            moveDirection.y = verticalVelocity;
+        }
+
+        if(!characterController.isGrounded){
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
 
         characterController.Move(moveDirection * Time.deltaTime);
-
 
     }
 
