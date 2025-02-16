@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,10 @@ public class Player : MonoBehaviour{
     private Vector3 moveDirection = Vector3.zero;
 
     private bool jumping = false;
+
+    public event Action OnIdle;
+    public event Action OnWalk;
+    public event Action OnSprint;
 
 
     private void Awake(){
@@ -61,7 +66,6 @@ public class Player : MonoBehaviour{
     private void JumpStart(InputAction.CallbackContext ctx){
         jumping = true;
     }
-
     private void JumpCancel(InputAction.CallbackContext ctx){
         jumping = false;
     }
@@ -87,6 +91,16 @@ public class Player : MonoBehaviour{
     }
 
     private void Move(Vector2 direction){
+
+        if(direction == Vector2.zero){
+            OnIdle?.Invoke();
+        }
+        else if(sprint){
+            OnSprint?.Invoke();
+        }
+        else{
+            OnWalk?.Invoke();
+        }
 
         Vector3 vectorForward = direction.y * transform.TransformDirection(Vector3.forward);
         Vector3 vectorRigth = direction.x * transform.TransformDirection(Vector3.right);
