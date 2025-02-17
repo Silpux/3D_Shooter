@@ -38,7 +38,6 @@ public class Alien : MonoBehaviour{
 
     private void SetTarget(Transform newTarget){
         target = newTarget;
-        Debug.Log("set new target");
     }
 
     private void Start(){
@@ -56,10 +55,10 @@ public class Alien : MonoBehaviour{
 
     private void Update(){
 
-        if(agent.velocity.magnitude > 3f){
+        if(agent.velocity.magnitude > 0.5f){
             OnSprint?.Invoke();
         }
-        else if(agent.velocity.magnitude > 1){
+        else if(agent.velocity.magnitude > 0){
             OnWalk?.Invoke();
         }
         else{

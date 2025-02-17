@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour{
 
-
     private CharacterController characterController;
 
     private InputActions inputActions;
@@ -65,16 +64,18 @@ public class Player : MonoBehaviour{
         inputActions.Player.Jump.canceled += JumpCancel;
 
         inputActions.Player.Shoot.performed += Shoot;
-
         inputActions.Player.Scope.performed += Scope;
 
         inputActions.Player.SwitchWeapon.performed += SwitchWeapon;
+
         inputActions.Player.Enable();
+
     }
 
     private void OnDisable(){
 
         inputActions.Player.Disable();
+
         inputActions.Player.Look.performed -= Look;
 
         inputActions.Player.Sprint.started -= SprintEnable;
@@ -85,7 +86,9 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Shoot.performed -= Shoot;
         inputActions.Player.Scope.performed -= Scope;
+
         inputActions.Player.SwitchWeapon.performed -= SwitchWeapon;
+
     }
 
     private void SwitchWeapon(InputAction.CallbackContext ctx){

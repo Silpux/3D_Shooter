@@ -10,23 +10,14 @@ public class AlienView : MonoBehaviour{
 
     private void OnTriggerStay(Collider other){
 
-        if(other.gameObject.TryGetComponent<Player>(out _)){
-
-            //Debug.Log("eyes: " + eyes.position + "||| other: " + other.transform.position);
-            Debug.DrawRay(eyes.position, other.transform.position - eyes.position, Color.green);
+        if(other.gameObject.TryGetComponent<Player>(out Player player)){
 
             if(Physics.Raycast(eyes.position, other.transform.position - eyes.position, out RaycastHit hit, 25f)){
 
-                //Debug.Log(hit.collider.gameObject.tag);
-
-                if(hit.collider.gameObject.TryGetComponent<Player>(out _)){
-                    //Debug.Log("yes");
+                if(hit.collider.gameObject.TryGetComponent<Player>(out Player p) && p == player){
                     OnTargetChanged?.Invoke(other.transform);
                     currentTarget = other.transform;
                 }
-                else{
-                    Debug.Log($"{hit.collider.gameObject.name}");
-                } 
 
             }
 
