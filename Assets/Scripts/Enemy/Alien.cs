@@ -1,0 +1,93 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Alien : MonoBehaviour{
+
+
+    [SerializeField] private AlienView alienView;
+
+    private NavMeshAgent agent;
+
+    private Transform target;
+
+    public float runSpeed;
+    public float walkSpeed;
+
+    public float damageOnHit;
+
+    private bool canAttack = true;
+
+    public float attackCooldown;
+
+    
+    public event Action OnIdle;
+    public event Action OnWalk;
+    public event Action OnSprint;
+
+    public event Action OnPunch;
+
+
+    private void OnEnable(){
+        alienView.OnTargetChanged += SetTarget;
+    }
+    private void OnDisable(){
+        alienView.OnTargetChanged -= SetTarget;
+    }
+
+    private void SetTarget(Transform newTarget){
+        target = newTarget;
+        Debug.Log("set new target");
+    }
+
+    private void Start(){
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void FixedUpdate(){
+
+        if(target){
+            agent.SetDestination(target.position);
+            agent.speed = runSpeed;
+        }
+
+    }
+
+    private void Update(){
+
+        if(agent.velocity.magnitude > 3f){
+            OnSprint?.Invoke();
+        }
+        else if(agent.velocity.magnitude > 1){
+            OnWalk?.Invoke();
+        }
+        else{
+            OnIdle?.Invoke();
+        }
+
+    }
+
+    public void Attack(){
+
+        if(canAttack){
+            OnPunch?.Invoke();
+            canAttack = false;
+            StartCoroutine(AttackCooldown());
+        }
+
+    }
+
+    public void DoDamage(){
+        if(target && target.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth)){
+            playerHealth.Damage(damageOnHit);
+        }
+    }
+
+    private IEnumerator AttackCooldown(){
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
+    }
+
+
+}

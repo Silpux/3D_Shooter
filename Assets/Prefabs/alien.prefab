@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6668210080285307391}
   - component: {fileID: 289565761308892744}
+  - component: {fileID: 3327807032350713156}
+  - component: {fileID: 6224269556602268828}
   m_Layer: 0
   m_Name: Alien
   m_TagString: Untagged
@@ -33,6 +35,7 @@ Transform:
   - {fileID: 1854367094645770637}
   - {fileID: 2586176186501849045}
   - {fileID: 5926660978842271946}
+  - {fileID: 9046650070486727545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &289565761308892744
@@ -58,6 +61,45 @@ CapsuleCollider:
   m_Height: 3.7819138
   m_Direction: 1
   m_Center: {x: 0, y: 1.3909569, z: 0}
+--- !u!195 &3327807032350713156
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89353813657514953}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6224269556602268828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89353813657514953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761e21a0d5f767140afaa7eabc1bab57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alienView: {fileID: 1695452250542768182}
+  runSpeed: 5
+  walkSpeed: 2
+  damageOnHit: 10
+  attackCooldown: 1
 --- !u!1 &2009434851165478263
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +543,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5770360585841657724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9046650070486727545}
+  m_Layer: 0
+  m_Name: Eyes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9046650070486727545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770360585841657724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.374, z: 0.542}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6668210080285307391}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6359220951833874211
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +672,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2586176186501849045}
   - component: {fileID: 7705280828286095854}
-  m_Layer: 0
+  - component: {fileID: 1418991614004459567}
+  m_Layer: 2
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,6 +716,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.909882, y: 2.750328, z: 0.80303955}
   m_Center: {x: 0, y: 1.5116463, z: 1.0124817}
+--- !u!114 &1418991614004459567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477601010962578947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b45f4c30719e1504fbb7d055c8979669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alien: {fileID: 6224269556602268828}
 --- !u!1 &7625967143830858238
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +739,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1854367094645770637}
   - component: {fileID: 8761558027031515407}
+  - component: {fileID: 8686852585415055798}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -699,6 +787,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8686852585415055798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625967143830858238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273ef518963e23c4fb98dd2c6ab54522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alien: {fileID: 6224269556602268828}
 --- !u!1 &8380361999100282237
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +812,7 @@ GameObject:
   - component: {fileID: 8104157333815264950}
   - component: {fileID: 7109438212595226284}
   - component: {fileID: 4677940179388896595}
+  - component: {fileID: 1695452250542768182}
   m_Layer: 2
   m_Name: FOV
   m_TagString: Untagged
@@ -752,10 +854,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6.5294237
-  m_Height: 16.243927
+  m_Radius: 8.7378
+  m_Height: 17.4756
   m_Direction: 1
-  m_Center: {x: 0, y: 1.8940032, z: -1.6817107}
+  m_Center: {x: 0, y: 1.8940029, z: -3.8900862}
 --- !u!136 &7109438212595226284
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -802,3 +904,16 @@ CapsuleCollider:
   m_Height: 36.19206
   m_Direction: 1
   m_Center: {x: 0, y: 29.364565, z: -1.4887638}
+--- !u!114 &1695452250542768182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8380361999100282237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 445f977c3b5320441aefc112d3f60fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyes: {fileID: 9046650070486727545}

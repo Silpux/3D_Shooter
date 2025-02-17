@@ -45,8 +45,6 @@ public class Player : MonoBehaviour{
 
         inputActions = new InputActions();
 
-        inputActions.Player.Enable();
-
         characterController = GetComponent<CharacterController>();
 
         lookSpeedX = lookSpeedXNormal;
@@ -55,6 +53,7 @@ public class Player : MonoBehaviour{
     }
 
     private void OnEnable(){
+
         inputActions.Player.Look.performed += Look;
 
         inputActions.Player.Sprint.started += SprintEnable;
@@ -66,9 +65,12 @@ public class Player : MonoBehaviour{
         inputActions.Player.Shoot.performed += Shoot;
 
         inputActions.Player.Scope.performed += Scope;
+        inputActions.Player.Enable();
     }
 
     private void OnDisable(){
+
+        inputActions.Player.Disable();
         inputActions.Player.Look.performed -= Look;
 
         inputActions.Player.Sprint.started -= SprintEnable;
