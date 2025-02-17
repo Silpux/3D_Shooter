@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Value",
+                    "id": "6b42a496-4c45-4153-973f-078f57bf1586",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -501,6 +510,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Scope",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3b65d00-9dba-4746-8204-e06cbab26dd4",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

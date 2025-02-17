@@ -40,6 +40,8 @@ public class Player : MonoBehaviour{
     public event Action OnShoot;
     public event Action OnScope;
 
+    public event Action<int> OnWeaponChange;
+
 
     private void Awake(){
 
@@ -65,6 +67,8 @@ public class Player : MonoBehaviour{
         inputActions.Player.Shoot.performed += Shoot;
 
         inputActions.Player.Scope.performed += Scope;
+
+        inputActions.Player.SwitchWeapon.performed += SwitchWeapon;
         inputActions.Player.Enable();
     }
 
@@ -81,6 +85,11 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Shoot.performed -= Shoot;
         inputActions.Player.Scope.performed -= Scope;
+        inputActions.Player.SwitchWeapon.performed -= SwitchWeapon;
+    }
+
+    private void SwitchWeapon(InputAction.CallbackContext ctx){
+        OnWeaponChange((int)ctx.ReadValue<Vector2>().y >> -1 | 1);
     }
 
     private void JumpStart(InputAction.CallbackContext ctx){

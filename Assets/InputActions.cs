@@ -116,6 +116,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeapon"",
+                    ""type"": ""Value"",
+                    ""id"": ""6b42a496-4c45-4153-973f-078f57bf1586"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -523,6 +532,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Scope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3b65d00-9dba-4746-8204-e06cbab26dd4"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SwitchWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1120,6 +1140,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
+        m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1209,6 +1230,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Scope;
+    private readonly InputAction m_Player_SwitchWeapon;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -1223,6 +1245,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_Player_Next;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Scope => m_Wrapper.m_Player_Scope;
+        public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1262,6 +1285,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Scope.started += instance.OnScope;
             @Scope.performed += instance.OnScope;
             @Scope.canceled += instance.OnScope;
+            @SwitchWeapon.started += instance.OnSwitchWeapon;
+            @SwitchWeapon.performed += instance.OnSwitchWeapon;
+            @SwitchWeapon.canceled += instance.OnSwitchWeapon;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1296,6 +1322,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Scope.started -= instance.OnScope;
             @Scope.performed -= instance.OnScope;
             @Scope.canceled -= instance.OnScope;
+            @SwitchWeapon.started -= instance.OnSwitchWeapon;
+            @SwitchWeapon.performed -= instance.OnSwitchWeapon;
+            @SwitchWeapon.canceled -= instance.OnSwitchWeapon;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1488,6 +1517,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnScope(InputAction.CallbackContext context);
+        void OnSwitchWeapon(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

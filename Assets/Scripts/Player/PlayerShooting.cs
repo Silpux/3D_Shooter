@@ -11,6 +11,26 @@ public class PlayerShooting : MonoBehaviour{
     private Animator cameraAnimator;
 
     private List<Weapon> weapons;
+
+
+    private int currentWeaponIndex;
+
+    private int CurrentWeaponIndex{
+        get => currentWeaponIndex;
+        set{
+            weapons[currentWeaponIndex].gameObject.SetActive(false);
+            currentWeaponIndex = value;
+            weapons[currentWeaponIndex].gameObject.SetActive(true);
+
+            IsReloading = false;
+            ReloadTimerImage.fillAmount = 1;
+
+            UpdateUI();
+        }
+    }
+
+    private Weapon CurrentWeapon => weapons[CurrentWeaponIndex];
+
     public Camera mainCamera;
 
     private bool isScoping = false;
@@ -43,7 +63,6 @@ public class PlayerShooting : MonoBehaviour{
     }
 
 
-    private int currentWeapon;
 
     private int reloadTimer;
 
@@ -68,56 +87,58 @@ public class PlayerShooting : MonoBehaviour{
     }
     private void Start(){
 
-
         weapons = new List<Weapon>();
-        currentWeapon = 0;
 
         for(int i=0;i<hand.transform.childCount;i++){
             weapons.Add(hand.GetChild(i).gameObject.GetComponent<Weapon>());
         }
 
-        UpdateUI();
+        CurrentWeaponIndex = 0;
 
     }
 
     private void OnEnable(){
         player.OnShoot += Shoot;
         player.OnScope += Scope;
+
+        player.OnWeaponChange += SwitchWeapon;
     }
 
     private void OnDisable(){
         player.OnShoot -= Shoot;
         player.OnScope -= Scope;
+
+        player.OnWeaponChange -= SwitchWeapon;
     }
 
     private void Shoot(){
 
         if(!IsReloading){
 
-            if(weapons[currentWeapon].BulletsCurrent > 0){
-                weapons[currentWeapon].Shoot();
+            if(CurrentWeapon.BulletsCurrent > 0){
+                CurrentWeapon.Shoot();
             }
 
-            if(weapons[currentWeapon].BulletsCurrent <= 0){
-                reloadTimer = weapons[currentWeapon].ReloadingTimerMax;
+            if(CurrentWeapon.BulletsCurrent <= 0){
+                reloadTimer = CurrentWeapon.ReloadingTimerMax;
                 IsReloading = true;
             }
 
             UpdateUI();
+
         }
 
     }
 
+    private void SwitchWeapon(int direction){
+
+        CurrentWeaponIndex = (CurrentWeaponIndex + direction + weapons.Count) % weapons.Count;
+
+    }
+
     private void Scope(){
-
-        IsScoping = !IsScoping;
-
+        IsScoping ^= true;
     }
-
-    private void Update(){
-        
-    }
-
     
     private void FixedUpdate(){
 
@@ -125,11 +146,11 @@ public class PlayerShooting : MonoBehaviour{
 
             reloadTimer--;
 
-            ReloadTimerImage.fillAmount = 1 - (float)reloadTimer / weapons[currentWeapon].ReloadingTimerMax;
+            ReloadTimerImage.fillAmount = 1 - (float)reloadTimer / CurrentWeapon.ReloadingTimerMax;
 
             if(reloadTimer <= 0){
 
-                weapons[currentWeapon].Reload();
+                CurrentWeapon.Reload();
                 IsReloading = false;
                 UpdateUI();
 
@@ -141,8 +162,8 @@ public class PlayerShooting : MonoBehaviour{
 
     private void UpdateUI(){
 
-        currentBulltesText.text = $"{weapons[currentWeapon].BulletsCurrent}/{weapons[currentWeapon].BulletsMax}";
-        totalBulltesText.text =$"{weapons[currentWeapon].BulletsTotal}";
+        currentBulltesText.text = $"{CurrentWeapon.BulletsCurrent}/{CurrentWeapon.BulletsMax}";
+        totalBulltesText.text =$"{CurrentWeapon.BulletsTotal}";
 
     }
 
