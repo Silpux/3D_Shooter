@@ -44,8 +44,8 @@ public class Weapon : MonoBehaviour{
 
     public void Reload(){
 
-        BulletsCurrent = bulletsMax > bulletsTotal ? bulletsTotal : bulletsMax;
-        bulletsTotal -= BulletsCurrent;
+        BulletsCurrent = BulletsMax > BulletsTotal ? BulletsTotal : BulletsMax;
+        BulletsTotal -= BulletsCurrent;
 
     }
 

@@ -59,11 +59,15 @@ public class PlayerShooting : MonoBehaviour{
     [SerializeField] private Image ReloadTimerImageBg;
 
     private void Awake(){
-
+        
         player = GetComponent<Player>();
         playerAnimator = hand.GetComponent<Animator>();
 
         cameraAnimator = mainCamera.GetComponent<Animator>();
+        
+    }
+    private void Start(){
+
 
         weapons = new List<Weapon>();
         currentWeapon = 0;
@@ -71,6 +75,7 @@ public class PlayerShooting : MonoBehaviour{
         for(int i=0;i<hand.transform.childCount;i++){
             weapons.Add(hand.GetChild(i).gameObject.GetComponent<Weapon>());
         }
+
         UpdateUI();
 
     }
