@@ -11,6 +11,7 @@ public class Alien : MonoBehaviour{
     private NavMeshAgent agent;
 
     private Transform target;
+    private Health health;
 
     public float runSpeed;
     public float walkSpeed;
@@ -30,9 +31,11 @@ public class Alien : MonoBehaviour{
 
 
     private void OnEnable(){
+        health.OnDeath += Death;
         alienView.OnTargetChanged += SetTarget;
     }
     private void OnDisable(){
+        health.OnDeath -= Death;
         alienView.OnTargetChanged -= SetTarget;
     }
 
@@ -40,8 +43,9 @@ public class Alien : MonoBehaviour{
         target = newTarget;
     }
 
-    private void Start(){
+    private void Awake(){
         agent = GetComponent<NavMeshAgent>();
+        health = GetComponent<Health>();
     }
 
     private void FixedUpdate(){
@@ -67,6 +71,10 @@ public class Alien : MonoBehaviour{
 
     }
 
+    private void Death(){
+        Destroy(gameObject);
+    }
+
     public void Attack(){
 
         if(canAttack){
@@ -78,7 +86,7 @@ public class Alien : MonoBehaviour{
     }
 
     public void DoDamage(){
-        if(target && target.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth)){
+        if(target && target.TryGetComponent(out Health playerHealth)){
             playerHealth.Damage(damageOnHit);
         }
     }

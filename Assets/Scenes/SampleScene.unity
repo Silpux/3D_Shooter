@@ -1577,7 +1577,7 @@ MonoBehaviour:
   bulletsMax: 5
   bulletsInitial: 5
   reloadingTimerMax: 200
-  damage: 0
+  damage: 30
   shootDistance: 500
   particlePrefab: {fileID: 2502897929197054146, guid: 8ffc15e9f3a7c1049a326104f3a5af78, type: 3}
 --- !u!1 &168979873 stripped
@@ -4973,7 +4973,7 @@ MonoBehaviour:
   bulletsMax: 30
   bulletsInitial: 30
   reloadingTimerMax: 50
-  damage: 0
+  damage: 5
   shootDistance: 200
   particlePrefab: {fileID: 2502897929197054146, guid: 8ffc15e9f3a7c1049a326104f3a5af78, type: 3}
 --- !u!1 &665645002 stripped
@@ -5185,6 +5185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1118028394}
+  playerHealth: {fileID: 1118028397}
 --- !u!1001 &685855820
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9581,6 +9582,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2896231023617955057, guid: 7f80fb4455dd86745aafd03163bedb34, type: 3}
+--- !u!1 &1263141022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 89353813657514953, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
+  m_PrefabInstance: {fileID: 5398971382626339451}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1263141027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263141022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37fda6ce32c31de498ff526f211b5156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &1266621422 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ea540d3c795b4d64c91d277ea4df59cc, type: 3}
@@ -10750,7 +10769,7 @@ MonoBehaviour:
   bulletsMax: 20
   bulletsInitial: 10
   reloadingTimerMax: 100
-  damage: 0
+  damage: 10
   shootDistance: 100
   particlePrefab: {fileID: 2502897929197054146, guid: 8ffc15e9f3a7c1049a326104f3a5af78, type: 3}
 --- !u!1001 &1355921651
@@ -16223,7 +16242,7 @@ MonoBehaviour:
   bulletsMax: 20
   bulletsInitial: 20
   reloadingTimerMax: 100
-  damage: 0
+  damage: 20
   shootDistance: 100
   particlePrefab: {fileID: 2502897929197054146, guid: 8ffc15e9f3a7c1049a326104f3a5af78, type: 3}
 --- !u!1 &2016233591 stripped
@@ -17099,14 +17118,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien
       objectReference: {fileID: 0}
-    - target: {fileID: 3327807032350713156, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
-      propertyPath: m_Acceleration
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3327807032350713156, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 1080
-      objectReference: {fileID: 0}
     - target: {fileID: 6668210080285307391, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
       propertyPath: m_LocalPosition.x
       value: -91.03201
@@ -17147,10 +17158,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8686852585415055798, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 1263141027}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 89353813657514953, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1263141027}
   m_SourcePrefab: {fileID: 100100000, guid: d2d8fff743574d940881aaf9dcf1a481, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

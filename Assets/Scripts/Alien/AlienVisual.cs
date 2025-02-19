@@ -4,11 +4,13 @@ public class AlienVisual : MonoBehaviour{
 
 
     [SerializeField] private Alien alien;
+    [SerializeField] private Health health;
 
     private Animator animator;
 
     private const string STATE_ANIMATION_NAME = "State";
     private const string PUNCH_ANIMATION_NAME = "Punch";
+    private const string DAMAGE_ANIMATION_NAME = "Damage";
 
     private void Awake(){
         animator = GetComponent<Animator>();
@@ -20,6 +22,8 @@ public class AlienVisual : MonoBehaviour{
         alien.OnSprint += Sprint;
 
         alien.OnPunch += Punch;
+
+        health.OnDamage += TakeDamage;
     }
 
     private void OnDisable(){
@@ -28,8 +32,14 @@ public class AlienVisual : MonoBehaviour{
         alien.OnSprint -= Sprint;
 
         alien.OnPunch -= Punch;
+
+        health.OnDamage -= TakeDamage;
     }
 
+
+    private void TakeDamage(float _){
+        animator.Play(DAMAGE_ANIMATION_NAME, 1, 0f);
+    }
     private void Idle(){
         animator.SetInteger(STATE_ANIMATION_NAME, 0);
     }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerVisual : MonoBehaviour{
 
     [SerializeField] private Player player;
+    [SerializeField] private Health playerHealth;
 
     private Animator animator;
 
@@ -17,12 +18,16 @@ public class PlayerVisual : MonoBehaviour{
         player.OnIdle += Idle;
         player.OnWalk += Walk;
         player.OnSprint += Sprint;
+
+        playerHealth.OnDamage += TakeDamage;
     }
 
     private void OnDisable(){
         player.OnIdle -= Idle;
         player.OnWalk -= Walk;
         player.OnSprint -= Sprint;
+
+        playerHealth.OnDamage -= TakeDamage;
     }
 
     private void Idle(){
@@ -37,8 +42,8 @@ public class PlayerVisual : MonoBehaviour{
         animator.SetInteger(STATE_ANIMATION_NAME, 2);
     }
 
-    private void Update(){
-        
+    private void TakeDamage(float health){
+        animator.Play("Damage", 1);
     }
 
 }

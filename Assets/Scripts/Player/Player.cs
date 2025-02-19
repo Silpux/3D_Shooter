@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour{
 
     private CharacterController characterController;
 
     private InputActions inputActions;
+
+    private Health health;
 
     [SerializeField] private Camera mainCamera;
 
@@ -48,12 +51,16 @@ public class Player : MonoBehaviour{
 
         characterController = GetComponent<CharacterController>();
 
+        health = GetComponent<Health>();
+
         lookSpeedX = lookSpeedXNormal;
         lookSpeedY = lookSpeedYNormal;
 
     }
 
     private void OnEnable(){
+
+        health.OnDeath += Death;
 
         inputActions.Player.Look.performed += Look;
 
@@ -76,6 +83,8 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Disable();
 
+        health.OnDeath -= Death;
+
         inputActions.Player.Look.performed -= Look;
 
         inputActions.Player.Sprint.started -= SprintEnable;
@@ -89,6 +98,10 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.SwitchWeapon.performed -= SwitchWeapon;
 
+    }
+
+    private void Death(){
+        SceneManager.LoadScene(0);
     }
 
     private void SwitchWeapon(InputAction.CallbackContext ctx){

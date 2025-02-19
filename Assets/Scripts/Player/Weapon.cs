@@ -38,6 +38,10 @@ public class Weapon : MonoBehaviour{
 
             Destroy(ps, 1f);
 
+            if(hit.collider.gameObject.TryGetComponent(out Health health)){
+                health.Damage(damage);
+            }
+
         }
 
     }
