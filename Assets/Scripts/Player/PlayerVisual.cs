@@ -43,7 +43,7 @@ public class PlayerVisual : MonoBehaviour{
     }
 
     private void TakeDamage(float health){
-        animator.Play("Damage", 1);
+        
     }
 
 }

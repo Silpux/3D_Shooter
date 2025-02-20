@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 289565761308892744}
   - component: {fileID: 3327807032350713156}
   - component: {fileID: 6224269556602268828}
+  - component: {fileID: 1284600584144194467}
   m_Layer: 0
-  m_Name: Alien
+  m_Name: alien
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,6 +101,19 @@ MonoBehaviour:
   walkSpeed: 2
   damageOnHit: 10
   attackCooldown: 1
+--- !u!114 &1284600584144194467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89353813657514953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37fda6ce32c31de498ff526f211b5156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &2009434851165478263
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alien: {fileID: 6224269556602268828}
-  health: {fileID: 0}
+  health: {fileID: 1284600584144194467}
 --- !u!1 &8380361999100282237
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class Alien : MonoBehaviour{
 
     private bool canAttack = true;
 
+    private bool dead;
+
     public float attackCooldown;
 
     
@@ -40,7 +42,9 @@ public class Alien : MonoBehaviour{
     }
 
     private void SetTarget(Transform newTarget){
-        target = newTarget;
+        if(!dead){
+            target = newTarget;
+        }
     }
 
     private void Awake(){
@@ -50,7 +54,7 @@ public class Alien : MonoBehaviour{
 
     private void FixedUpdate(){
 
-        if(target){
+        if(!dead && target){
             agent.SetDestination(target.position);
             agent.speed = runSpeed;
         }
@@ -72,13 +76,15 @@ public class Alien : MonoBehaviour{
     }
 
     private void Death(){
+        dead = true;
         agent.speed = 0f;
+        GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 3f);
     }
 
     public void Attack(){
 
-        if(canAttack){
+        if(!dead && canAttack){
             OnPunch?.Invoke();
             canAttack = false;
             StartCoroutine(AttackCooldown());
