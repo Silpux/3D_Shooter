@@ -8,9 +8,10 @@ public class AlienVisual : MonoBehaviour{
 
     private Animator animator;
 
-    private const string STATE_ANIMATION_NAME = "State";
+    private const string STATE_PARAM_NAME = "State";
     private const string PUNCH_ANIMATION_NAME = "Punch";
     private const string DAMAGE_ANIMATION_NAME = "Damage";
+    private const string DEATH_ANIMATION_NAME = "Death";
 
     private void Awake(){
         animator = GetComponent<Animator>();
@@ -24,6 +25,7 @@ public class AlienVisual : MonoBehaviour{
         alien.OnPunch += Punch;
 
         health.OnDamage += TakeDamage;
+        health.OnDeath += Death;
     }
 
     private void OnDisable(){
@@ -34,6 +36,7 @@ public class AlienVisual : MonoBehaviour{
         alien.OnPunch -= Punch;
 
         health.OnDamage -= TakeDamage;
+        health.OnDeath -= Death;
     }
 
 
@@ -41,23 +44,27 @@ public class AlienVisual : MonoBehaviour{
         animator.Play(DAMAGE_ANIMATION_NAME, 1, 0f);
     }
     private void Idle(){
-        animator.SetInteger(STATE_ANIMATION_NAME, 0);
+        animator.SetInteger(STATE_PARAM_NAME, 0);
     }
 
     private void Walk(){
-        animator.SetInteger(STATE_ANIMATION_NAME, 1);
+        animator.SetInteger(STATE_PARAM_NAME, 1);
     }
 
     private void Sprint(){
-        animator.SetInteger(STATE_ANIMATION_NAME, 2);
+        animator.SetInteger(STATE_PARAM_NAME, 2);
     }
 
     private void Punch(){
-        animator.Play("Punch");
+        animator.Play(PUNCH_ANIMATION_NAME);
     }
 
     public void DoDamage(){
         alien.DoDamage();
+    }
+
+    private void Death(){
+        animator.Play(DEATH_ANIMATION_NAME);
     }
 
 }

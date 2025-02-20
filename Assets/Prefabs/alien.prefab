@@ -800,6 +800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alien: {fileID: 6224269556602268828}
+  health: {fileID: 0}
 --- !u!1 &8380361999100282237
 GameObject:
   m_ObjectHideFlags: 0

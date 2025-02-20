@@ -72,7 +72,8 @@ public class Alien : MonoBehaviour{
     }
 
     private void Death(){
-        Destroy(gameObject);
+        agent.speed = 0f;
+        Destroy(gameObject, 3f);
     }
 
     public void Attack(){

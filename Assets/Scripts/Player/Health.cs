@@ -15,7 +15,10 @@ public class Health : MonoBehaviour{
     private float Value{
         get => value;
         set{
-            if(value > this.value){
+            if(value <= 0){
+                OnDeath?.Invoke();
+            }
+            else if(value > this.value){
                 OnHeal?.Invoke(value / maxHealth);
             }
             else{
@@ -31,8 +34,5 @@ public class Health : MonoBehaviour{
 
     public void Damage(float count){
         Value -= count;
-        if(Value <= 0){
-            OnDeath?.Invoke();
-        }
     }
 }
