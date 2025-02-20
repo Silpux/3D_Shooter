@@ -3,20 +3,27 @@ using UnityEngine;
 
 public class AlienView : MonoBehaviour{
 
+    [SerializeField] private Alien alien;
     [SerializeField] private Transform eyes;
 
     private Transform currentTarget;
     public event Action<Transform> OnTargetChanged;
 
+    private void OnEnable(){
+        alien.OnHit += SetTarget;
+    }
+    private void OnDisable(){
+        alien.OnHit -= SetTarget;
+    }
+
     private void OnTriggerStay(Collider other){
 
-        if(other.gameObject.TryGetComponent<Player>(out Player player)){
+        if(other.gameObject.TryGetComponent(out Player player)){
 
             if(Physics.Raycast(eyes.position, other.transform.position - eyes.position, out RaycastHit hit, 25f)){
 
-                if(hit.collider.gameObject.TryGetComponent<Player>(out Player p) && p == player){
-                    OnTargetChanged?.Invoke(other.transform);
-                    currentTarget = other.transform;
+                if(hit.collider.gameObject.TryGetComponent(out Player p) && p == player){
+                    SetTarget(other.transform);
                 }
 
             }
@@ -27,9 +34,14 @@ public class AlienView : MonoBehaviour{
     private void OnTriggerExit(Collider other){
         
         if(other.transform == currentTarget){
-            OnTargetChanged?.Invoke(null);
+            SetTarget(null);
         }
     
+    }
+
+    private void SetTarget(Transform newTarget){
+        OnTargetChanged?.Invoke(newTarget);
+        currentTarget = newTarget;
     }
 
 }

@@ -931,4 +931,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445f977c3b5320441aefc112d3f60fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alien: {fileID: 6224269556602268828}
   eyes: {fileID: 9046650070486727545}

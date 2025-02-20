@@ -30,6 +30,7 @@ public class Alien : MonoBehaviour{
     public event Action OnSprint;
 
     public event Action OnPunch;
+    public event Action<Transform> OnHit;
 
 
     private void OnEnable(){
@@ -90,6 +91,10 @@ public class Alien : MonoBehaviour{
             StartCoroutine(AttackCooldown());
         }
 
+    }
+
+    public void Hit(Transform damageSource){
+        OnHit?.Invoke(damageSource);
     }
 
     public void DoDamage(){

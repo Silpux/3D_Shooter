@@ -41,6 +41,9 @@ public class Weapon : MonoBehaviour{
             if(hit.collider.gameObject.TryGetComponent(out Health health)){
                 health.Damage(damage);
             }
+            if(hit.collider.gameObject.TryGetComponent(out Alien alien)){
+                alien.Hit(transform);
+            }
 
         }
 
