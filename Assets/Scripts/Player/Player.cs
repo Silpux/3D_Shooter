@@ -31,6 +31,19 @@ public class Player : MonoBehaviour{
 
     private float cameraRotation;
     private bool sprint;
+    private bool isScoping;
+
+    private bool IsScoping{
+        get => isScoping;
+        set{
+            if(isScoping ^ value){
+                OnScope?.Invoke(value);
+                ChangeLookSpeed(value);
+                isScoping = value;
+            }
+        }
+    }
+
     private Vector3 moveDirection = Vector3.zero;
 
     private bool jumping = false;
@@ -40,7 +53,7 @@ public class Player : MonoBehaviour{
     public event Action OnSprint;
 
     public event Action OnShoot;
-    public event Action OnScope;
+    public event Action<bool> OnScope;
 
     public event Action<int> OnWeaponChange;
 
@@ -127,7 +140,7 @@ public class Player : MonoBehaviour{
     }
 
     private void Scope(InputAction.CallbackContext ctx){
-        OnScope?.Invoke();
+        IsScoping ^= true;
     }
 
     private void Look(InputAction.CallbackContext ctx){
@@ -177,7 +190,7 @@ public class Player : MonoBehaviour{
 
     }
 
-    public void ChangeLookSpeed(bool isScoping){
+    private void ChangeLookSpeed(bool isScoping){
         if(isScoping){
             lookSpeedX = lookSpeedXScoping;
             lookSpeedY = lookSpeedYScoping;

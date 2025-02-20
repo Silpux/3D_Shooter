@@ -131,13 +131,11 @@ public class PlayerShooting : MonoBehaviour{
     }
 
     private void SwitchWeapon(int direction){
-
         CurrentWeaponIndex = (CurrentWeaponIndex + direction + weapons.Count) % weapons.Count;
-
     }
 
-    private void Scope(){
-        IsScoping ^= true;
+    private void Scope(bool state){
+        IsScoping = state;
     }
     
     private void FixedUpdate(){
