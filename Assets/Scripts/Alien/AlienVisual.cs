@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class AlienVisual : MonoBehaviour{
@@ -5,6 +6,8 @@ public class AlienVisual : MonoBehaviour{
 
     [SerializeField] private Alien alien;
     [SerializeField] private Health health;
+
+    [SerializeField] private ParticleSystem deathEffect;
 
     private Animator animator;
 
@@ -65,6 +68,10 @@ public class AlienVisual : MonoBehaviour{
 
     private void Death(){
         animator.Play(DEATH_ANIMATION_NAME);
+    }
+
+    public void DeathParticles(){
+        Instantiate(deathEffect, transform.position + transform.up * 1.5f, Quaternion.Euler(-90, 0, 0), null);
     }
 
 }

@@ -58,7 +58,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7684192
+  m_Radius: 1.0606624
   m_Height: 3.7819138
   m_Direction: 1
   m_Center: {x: 0, y: 1.3909569, z: 0}
@@ -728,8 +728,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.909882, y: 2.750328, z: 0.80303955}
-  m_Center: {x: 0, y: 1.5116463, z: 1.0124817}
+  m_Size: {x: 1.909882, y: 3.6663876, z: 2.4051895}
+  m_Center: {x: 0, y: 1.969676, z: 0.56308365}
 --- !u!114 &1418991614004459567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,6 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alien: {fileID: 6224269556602268828}
   health: {fileID: 1284600584144194467}
+  deathEffect: {fileID: 2311738343008746366, guid: e66109da563e85341a06a5937247bd00, type: 3}
 --- !u!1 &8380361999100282237
 GameObject:
   m_ObjectHideFlags: 0
