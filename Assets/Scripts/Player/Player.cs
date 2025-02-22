@@ -52,7 +52,7 @@ public class Player : MonoBehaviour{
     public event Action OnWalk;
     public event Action OnSprint;
 
-    public event Action OnShoot;
+    public event Action<Transform> OnShoot;
     public event Action<bool> OnScope;
 
     public event Action<int> OnWeaponChange;
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour{
     }
 
     private void SwitchWeapon(InputAction.CallbackContext ctx){
-        OnWeaponChange((int)ctx.ReadValue<Vector2>().y >> -1 | 1);
+        OnWeaponChange?.Invoke((int)ctx.ReadValue<Vector2>().y >> -1 | 1);
     }
 
     private void JumpStart(InputAction.CallbackContext ctx){
@@ -136,7 +136,7 @@ public class Player : MonoBehaviour{
     }
 
     private void Shoot(InputAction.CallbackContext ctx){
-        OnShoot?.Invoke();
+        OnShoot?.Invoke(transform);
     }
 
     private void Scope(InputAction.CallbackContext ctx){

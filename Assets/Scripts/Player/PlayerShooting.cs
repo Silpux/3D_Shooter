@@ -111,12 +111,12 @@ public class PlayerShooting : MonoBehaviour{
         player.OnWeaponChange -= SwitchWeapon;
     }
 
-    private void Shoot(){
+    private void Shoot(Transform player){
 
         if(!IsReloading){
 
             if(CurrentWeapon.BulletsCurrent > 0){
-                CurrentWeapon.Shoot();
+                CurrentWeapon.Shoot(player);
             }
 
             if(CurrentWeapon.BulletsCurrent <= 0){

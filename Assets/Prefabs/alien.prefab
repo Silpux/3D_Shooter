@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alienView: {fileID: 1695452250542768182}
   runSpeed: 5
-  walkSpeed: 2
+  walkSpeed: 1.5
   damageOnHit: 10
   attackCooldown: 1
 --- !u!114 &1284600584144194467
@@ -934,3 +934,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alien: {fileID: 6224269556602268828}
   eyes: {fileID: 9046650070486727545}
+  walkTargetRadius: 50

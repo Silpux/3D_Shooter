@@ -10,21 +10,20 @@ public class Alien : MonoBehaviour{
 
     private NavMeshAgent agent;
 
-    private Transform target;
+    private Vector3? target;
     private Health health;
 
-    public float runSpeed;
-    public float walkSpeed;
+    [SerializeField] private float runSpeed;
+    [SerializeField] private float walkSpeed;
 
-    public float damageOnHit;
+    [SerializeField] private float damageOnHit;
 
     private bool canAttack = true;
 
     private bool dead;
 
-    public float attackCooldown;
+    [SerializeField] private float attackCooldown;
 
-    
     public event Action OnIdle;
     public event Action OnWalk;
     public event Action OnSprint;
@@ -42,7 +41,7 @@ public class Alien : MonoBehaviour{
         alienView.OnTargetChanged -= SetTarget;
     }
 
-    private void SetTarget(Transform newTarget){
+    private void SetTarget(Vector3? newTarget){
         if(!dead){
             target = newTarget;
         }
@@ -55,20 +54,21 @@ public class Alien : MonoBehaviour{
 
     private void FixedUpdate(){
 
-        if(!dead && target){
-            agent.SetDestination(target.position);
-            agent.speed = runSpeed;
+        if(!dead && target is not null){
+            agent.SetDestination((Vector3)target);
         }
 
     }
 
     private void Update(){
 
-        if(agent.velocity.magnitude > 0.5f){
+        if(alienView.ChasingTarget != null){
             OnSprint?.Invoke();
+            agent.speed = runSpeed;
         }
-        else if(agent.velocity.magnitude > 0){
+        else if(target != null){
             OnWalk?.Invoke();
+            agent.speed = walkSpeed;
         }
         else{
             OnIdle?.Invoke();
@@ -98,7 +98,7 @@ public class Alien : MonoBehaviour{
     }
 
     public void DoDamage(){
-        if(target && target.TryGetComponent(out Health playerHealth)){
+        if(alienView.ChasingTarget && alienView.ChasingTarget.TryGetComponent(out Health playerHealth)){
             playerHealth.Damage(damageOnHit);
         }
     }

@@ -25,7 +25,7 @@ public class Weapon : MonoBehaviour{
 
     [SerializeField] private GameObject particlePrefab;
 
-    public void Shoot(){
+    public void Shoot(Transform player){
 
         BulletsCurrent--;
 
@@ -42,7 +42,7 @@ public class Weapon : MonoBehaviour{
                 health.Damage(damage);
             }
             if(hit.collider.gameObject.TryGetComponent(out Alien alien)){
-                alien.Hit(transform);
+                alien.Hit(player);
             }
 
         }
