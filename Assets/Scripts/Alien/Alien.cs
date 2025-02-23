@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Alien : MonoBehaviour{
 
-
+    public static event Action OnDeath;
     [SerializeField] private AlienView alienView;
 
     private NavMeshAgent agent;
@@ -83,6 +83,7 @@ public class Alien : MonoBehaviour{
         agent.speed = 0f;
         GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 3f);
+        OnDeath?.Invoke();
     }
 
     public void Attack(){

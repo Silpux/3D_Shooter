@@ -126,7 +126,7 @@ public class PlayerShooting : MonoBehaviour{
                 CurrentWeapon.Shoot(player);
             }
 
-            if(CurrentWeapon.BulletsCurrent <= 0){
+            if(CurrentWeapon.BulletsCurrent <= 0 && CurrentWeapon.BulletsTotal > 0){
                 reloadTimer = CurrentWeapon.ReloadingTimerMax;
                 IsReloading = true;
             }
