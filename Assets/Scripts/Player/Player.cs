@@ -29,6 +29,10 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private float lookLimitY = 90;
 
+    [SerializeField] private float bulletBoxFocusDistance;
+
+    private BulletBox currentFocusBox;
+
     private float cameraRotation;
     private bool sprint;
     private bool isScoping;
@@ -57,6 +61,7 @@ public class Player : MonoBehaviour{
 
     public event Action<int> OnWeaponChange;
 
+    public event Action<int> OnCollectBullets;
 
     private void Awake(){
 
@@ -88,6 +93,8 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.SwitchWeapon.performed += SwitchWeapon;
 
+        inputActions.Player.Interact.performed += CollectCurrentFocusBox;
+
         inputActions.Player.Enable();
 
     }
@@ -110,6 +117,8 @@ public class Player : MonoBehaviour{
         inputActions.Player.Scope.performed -= Scope;
 
         inputActions.Player.SwitchWeapon.performed -= SwitchWeapon;
+
+        inputActions.Player.Interact.performed -= CollectCurrentFocusBox;
 
     }
 
@@ -201,10 +210,37 @@ public class Player : MonoBehaviour{
         }
     }
 
+    private void CollectCurrentFocusBox(InputAction.CallbackContext ctx){
+
+        if(currentFocusBox != null){
+
+            OnCollectBullets?.Invoke(currentFocusBox.BulletCount);
+            Destroy(currentFocusBox.gameObject);
+            currentFocusBox = null;
+
+        }
+
+    }
+
 
     private void Update(){
 
         Move(inputActions.Player.Move.ReadValue<Vector2>());
+
+        Ray ray = mainCamera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        if(Physics.Raycast(ray, out RaycastHit hit, bulletBoxFocusDistance) && hit.collider.gameObject.TryGetComponent(out BulletBox bulletBox)){
+
+            bulletBox.Highlight(mainCamera.transform);
+            currentFocusBox = bulletBox;
+
+        }
+        else if(currentFocusBox != null){
+
+            currentFocusBox.Lowlight();
+            currentFocusBox = null;
+
+        }
 
     }
 

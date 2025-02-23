@@ -31,7 +31,7 @@ public class PlayerShooting : MonoBehaviour{
 
     private Weapon CurrentWeapon => weapons[CurrentWeaponIndex];
 
-    public Camera mainCamera;
+    [SerializeField] private Camera mainCamera;
 
     private bool isScoping = false;
     private bool isReloading = false;
@@ -102,6 +102,7 @@ public class PlayerShooting : MonoBehaviour{
         player.OnScope += Scope;
 
         player.OnWeaponChange += SwitchWeapon;
+        player.OnCollectBullets += CollectBullets;
     }
 
     private void OnDisable(){
@@ -109,6 +110,12 @@ public class PlayerShooting : MonoBehaviour{
         player.OnScope -= Scope;
 
         player.OnWeaponChange -= SwitchWeapon;
+        player.OnCollectBullets -= CollectBullets;
+    }
+
+    private void CollectBullets(int count){
+        CurrentWeapon.BulletsTotal += count;
+        UpdateUI();
     }
 
     private void Shoot(Transform player){

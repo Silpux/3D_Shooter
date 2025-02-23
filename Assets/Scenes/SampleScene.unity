@@ -8930,6 +8930,7 @@ MonoBehaviour:
   jumpForce: 15
   gravity: 40
   lookLimitY: 90
+  bulletBoxFocusDistance: 5
 --- !u!143 &1118028395
 CharacterController:
   m_ObjectHideFlags: 0

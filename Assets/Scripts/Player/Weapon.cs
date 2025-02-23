@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour{
     [SerializeField] private int bulletsMax;
     [SerializeField] private int bulletsInitial;
 
-    public int BulletsTotal{get;private set;}
+    public int BulletsTotal{get; set;}
     public int BulletsMax{get;private set;}
     public int BulletsCurrent{get;private set;}
 
@@ -30,9 +30,8 @@ public class Weapon : MonoBehaviour{
         BulletsCurrent--;
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, shootDistance)){
+        if(Physics.Raycast(ray, out RaycastHit hit, shootDistance)){
 
             GameObject ps = Instantiate(particlePrefab, hit.point, Quaternion.identity);
 
