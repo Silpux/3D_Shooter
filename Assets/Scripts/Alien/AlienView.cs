@@ -10,6 +10,8 @@ public class AlienView : MonoBehaviour{
 
     [SerializeField] private float walkTargetRadius = 20f;
 
+    private int viewLayerMask;
+
     public Transform ChasingTarget{get; private set;} = null;
     private Vector3? lastChasingTargetPosition = null;
 
@@ -28,6 +30,7 @@ public class AlienView : MonoBehaviour{
 
     private void Start(){
         walkingTarget = transform.position;
+        viewLayerMask = ~((1 << LayerMask.NameToLayer("Alien")) | (1 << LayerMask.NameToLayer("Ignore Raycast")));
     }
 
     private void Update(){
@@ -74,7 +77,7 @@ public class AlienView : MonoBehaviour{
 
         if(other.gameObject.TryGetComponent(out Player player)){
 
-            if(Physics.Raycast(eyes.position, other.transform.position - eyes.position, out RaycastHit hit, 250f)){
+            if(Physics.Raycast(eyes.position, other.transform.position - eyes.position, out RaycastHit hit, 250f, viewLayerMask)){
 
                 if(hit.collider.gameObject.TryGetComponent(out Player p) && p == player){
                     SetTarget(other.transform);
@@ -135,7 +138,7 @@ public class AlienView : MonoBehaviour{
     }
 
 
-    public Vector3? FindNavMeshPointBelow(Vector3? target, float maxDropDistance = 50f, float maxNavMeshDistance = 2f){
+    public Vector3? FindNavMeshPointBelow(Vector3? target, float maxDropDistance = 50f, float maxNavMeshDistance = 5f){
         
         if(target is null) return null;
         Vector3 targetPosition = (Vector3)target;

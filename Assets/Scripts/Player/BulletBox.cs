@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BulletBox : MonoBehaviour{
 
+    public static int Count{get; private set;}
     private Outline outline;
 
     [field: SerializeField] public int BulletCount{get; private set;}
@@ -12,6 +13,7 @@ public class BulletBox : MonoBehaviour{
     private void Awake(){
         outline = GetComponent<Outline>();
         hintCanvas.gameObject.SetActive(false);
+        Count++;
     }
 
     public void Highlight(Transform lookAt){
@@ -24,6 +26,13 @@ public class BulletBox : MonoBehaviour{
         outline.enabled = false;
         this.lookAt = null;
         hintCanvas.gameObject.SetActive(false);
+    }
+
+    public void Collect(){
+
+        Destroy(gameObject);
+        Count--;
+
     }
 
     private void LateUpdate(){

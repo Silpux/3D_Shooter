@@ -97,6 +97,8 @@ public class Player : MonoBehaviour{
 
         inputActions.Player.Enable();
 
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     private void OnDisable(){
@@ -119,6 +121,8 @@ public class Player : MonoBehaviour{
         inputActions.Player.SwitchWeapon.performed -= SwitchWeapon;
 
         inputActions.Player.Interact.performed -= CollectCurrentFocusBox;
+
+        Cursor.lockState = CursorLockMode.None;
 
     }
 
@@ -215,7 +219,7 @@ public class Player : MonoBehaviour{
         if(currentFocusBox != null){
 
             OnCollectBullets?.Invoke(currentFocusBox.BulletCount);
-            Destroy(currentFocusBox.gameObject);
+            currentFocusBox.Collect();
             currentFocusBox = null;
 
         }

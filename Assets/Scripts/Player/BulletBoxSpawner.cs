@@ -26,7 +26,9 @@ public class BulletBoxSpawner : MonoBehaviour{
 
             timeToSpawn = spawnTime * Random.Range(0.85f, 1.15f);
 
-            SpawnBulletBox();
+            if(BulletBox.Count <= 200){
+                SpawnBulletBox();
+            }
 
         }
 
