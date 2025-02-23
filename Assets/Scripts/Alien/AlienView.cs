@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,11 +19,11 @@ public class AlienView : MonoBehaviour{
     public event Action<Vector3?> OnTargetChanged;
 
     private void OnEnable(){
-        alien.OnHit += SetTarget;
+        alien.OnHit += GetHit;
     }
 
     private void OnDisable(){
-        alien.OnHit -= SetTarget;
+        alien.OnHit -= GetHit;
     }
 
     private void Start(){
@@ -91,6 +92,33 @@ public class AlienView : MonoBehaviour{
         if(other.transform == ChasingTarget){
             targetInFOV = false;
         }
+
+    }
+
+    private void GetHit(Transform damageSource){
+
+        SetTarget(damageSource);
+
+        foreach(var alien in GetWitnesses(5f)){
+            alien.SetTarget(damageSource);
+        }
+    }
+
+    private List<AlienView> GetWitnesses(float maxDistance){
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, maxDistance);
+        List<AlienView> nearbyObjects = new List<AlienView>();
+
+        foreach(Collider col in colliders){
+
+            if(col.gameObject == gameObject) continue;
+
+            if(col.gameObject.TryGetComponent(out AlienView alienView)){
+                nearbyObjects.Add(alienView);
+            }
+        }
+        
+        return nearbyObjects;
 
     }
 
