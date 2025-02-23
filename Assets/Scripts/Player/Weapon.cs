@@ -44,6 +44,9 @@ public class Weapon : MonoBehaviour{
             if(hit.collider.gameObject.TryGetComponent(out Alien alien)){
                 alien.Hit(player);
             }
+            if(hit.collider.gameObject.TryGetComponent(out Rigidbody rb)){
+                rb.AddForce(ray.direction * 15f, ForceMode.Impulse);
+            }
 
         }
 
