@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class Alien : MonoBehaviour{
 
     public static event Action OnDeath;
+    public static int TotalCount{get; private set;}
+
     [SerializeField] private AlienView alienView;
 
     private NavMeshAgent agent;
@@ -50,6 +52,7 @@ public class Alien : MonoBehaviour{
     private void Awake(){
         agent = GetComponent<NavMeshAgent>();
         health = GetComponent<Health>();
+        TotalCount++;
     }
 
     private void FixedUpdate(){
@@ -84,6 +87,7 @@ public class Alien : MonoBehaviour{
         GetComponent<CapsuleCollider>().enabled = false;
         Destroy(gameObject, 3f);
         OnDeath?.Invoke();
+        TotalCount--;
     }
 
     public void Attack(){

@@ -28,7 +28,9 @@ public class AlienSpawner : MonoBehaviour{
 
     private void SpawnEnemy(){
 
-        Instantiate(alienPrefab, transform.position, Quaternion.identity);
+        if(Alien.TotalCount < 100){
+            Instantiate(alienPrefab, transform.position, Quaternion.identity);
+        }
 
     }
 
