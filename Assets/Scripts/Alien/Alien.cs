@@ -61,17 +61,19 @@ public class Alien : MonoBehaviour{
     }
 
     private void Update(){
-
-        if(alienView.ChasingTarget != null){
-            OnSprint?.Invoke();
-            agent.speed = runSpeed;
-        }
-        else if(target != null){
-            OnWalk?.Invoke();
-            agent.speed = walkSpeed;
-        }
-        else{
-            OnIdle?.Invoke();
+        
+        if(!dead){
+            if(alienView.ChasingTarget != null){
+                OnSprint?.Invoke();
+                agent.speed = runSpeed;
+            }
+            else if(target != null){
+                OnWalk?.Invoke();
+                agent.speed = walkSpeed;
+            }
+            else{
+                OnIdle?.Invoke();
+            }
         }
 
     }
